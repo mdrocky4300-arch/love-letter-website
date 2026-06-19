@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>শুধুমাত্র তোমার জন্য 💖 | একটি বিশেষ বার্তা</title>
+    <!-- Google Fonts for premium look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Galada&family=Hind+Siliguri:wght@300;400;600;700&family=Noto+Serif+Bengali:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         🔒 PASSWORD LOCK SCREEN — renders before everything else
+         ═══════════════════════════════════════════════════════════ -->
+    <div id="lock-screen" class="lock-screen" aria-label="Password Protection">
+
+        <!-- Animated floating hearts layer -->
+        <div class="lock-hearts" aria-hidden="true">
+            <span class="lh lh1">💖</span>
+            <span class="lh lh2">💜</span>
+            <span class="lh lh3">🌸</span>
+            <span class="lh lh4">💗</span>
+            <span class="lh lh5">✨</span>
+            <span class="lh lh6">💕</span>
+            <span class="lh lh7">🌹</span>
+            <span class="lh lh8">💞</span>
+        </div>
+
+        <!-- Glassmorphism panel -->
+        <div class="lock-panel" role="main">
+
+            <!-- Decorative orbs -->
+            <div class="lock-orb lock-orb-1" aria-hidden="true"></div>
+            <div class="lock-orb lock-orb-2" aria-hidden="true"></div>
+
+            <div class="lock-icon" aria-hidden="true">🔒</div>
+
+            <h1 class="lock-title">গোপন প্রবেশদ্বার</h1>
+            <p class="lock-subtitle">এই চিঠি শুধুমাত্র বিশেষ একজনের জন্য</p>
+
+            <div class="password-form" role="form" aria-label="Password entry">
+                <input
+                    id="lock-input"
+                    type="password"
+                    placeholder="গোপন পাসওয়ার্ড লিখুন…"
+                    autocomplete="current-password"
+                    aria-label="Password"
+                    maxlength="20"
+                >
+                <button id="lock-btn" class="btn lock-btn-enter">
+                    <span>প্রবেশ করো 💖</span>
+                    <div class="btn-glow"></div>
+                </button>
+                <p id="lock-error" class="lock-error" role="alert" aria-live="polite"></p>
+            </div>
+
+        </div>
+    </div>
+    <!-- Background Canvas for Interactive Particles -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Main Container -->
+    <main id="app-container">
+
+        <!-- Screen 1: Welcome Screen -->
+        <section id="screen-welcome" class="card active">
+            <div class="card-content">
+                <div class="sparkle-icon">✨</div>
+                <h1 class="title-primary">হ্যালো, প্রিয়! 🌸</h1>
+                <p class="subtitle">তোমার জন্য একটি বিশেষ এবং গোপন চিঠি অপেক্ষা করছে।</p>
+                <button id="btn-start" class="btn btn-primary">
+                    <span>পড়া শুরু করো</span>
+                    <div class="btn-glow"></div>
+                </button>
+            </div>
+        </section>
+
+        <!-- Screen 2: Playful Challenge Screen -->
+        <section id="screen-challenge" class="card hidden">
+            <div class="card-content">
+                <div class="heart-icon-pulse">💖</div>
+                <h2 class="title-secondary">একটু পরীক্ষা করা যাক!</h2>
+                <p class="subtitle">তুমিই কি আসলেই আমার এই হৃদয়ের একমাত্র মালিক?</p>
+
+                <div class="button-group">
+                    <button id="btn-yes" class="btn btn-success">হ্যাঁ, আমিই! 💖</button>
+                    <!-- Runaway button -->
+                    <button id="btn-no" class="btn btn-danger">না</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screen 3: The Envelope Screen -->
+        <section id="screen-envelope" class="card hidden">
+            <div class="card-content">
+                <h2 class="title-secondary">একটি চিঠি এসেছে... ✉️</h2>
+                <p class="subtitle">খামটির ওপরে ক্লিক করে খুলে নাও।</p>
+
+                <!-- CSS Interactive Envelope -->
+                <div class="envelope-wrapper" id="envelope-wrapper">
+                    <div class="envelope">
+                        <div class="flap"></div>
+                        <div class="pocket"></div>
+                        <div class="letter">
+                            <div class="letter-preview">
+                                <p>শুধু তোমার জন্য...</p>
+                                <span class="letter-heart">💖</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btn-read-letter" class="btn btn-primary hidden">
+                    <span>চিঠিটি পড়ো</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Screen 4: The Final Handwritten Letter Screen -->
+        <section id="screen-letter" class="card letter-open hidden">
+            <div class="letter-paper">
+                <div class="letter-header">
+                    <span class="letter-date" id="current-date">১৯ জুন, ২০২৬</span>
+                </div>
+                <div class="letter-body">
+                    <p class="salutation">প্রিয়তমা সাবিনা,</p>
+                    <p class="paragraph delay-1">কিছু অনুভূতি মুখে প্রকাশ করা বড় কঠিন, তাই তোমায় লিখে জানালাম। তুমি যখন
+                        থেকে আমার জীবনে এসেছ, তখন থেকেই চারপাশটা অনেক বেশি উজ্জ্বল, স্নিগ্ধ আর সুন্দর হয়ে উঠেছে।</p>
+                    <p class="paragraph delay-2">তোমার হাসি আমার প্রিয়তম সুর, তোমার মিষ্টি হাসি যেন আমার প্রতিদিনের এক
+                        চিলতে রোদ, আর তোমার আনন্দই আমার জীবনের একমাত্র চাওয়া।</p>
+                    <p class="paragraph delay-3">তোমাকে আমি কতটা ভালোবাসি তা কোনো শব্দ দিয়ে বোঝানো সম্ভব নয়, তুমি নিজেও
+                        কখনো তা পুরোপুরি জানতে পারবে না। আজ এবং আগামী প্রতিটি দিনের জন্য তুমিই আমার সবচেয়ে প্রিয় মানুষ।
+                        💖</p>
+                    <p class="signature delay-4">সবসময় শুধুই তোমার,</p>
+                </div>
+
+                <hr class="letter-divider">
+
+                <!-- Interactive Extras inside the letter paper -->
+                <div class="interactive-extras">
+                    <h3 class="extras-title">তোমাকে কেন এত ভালোবাসি? ✨</h3>
+                    <p id="reason-text" class="reason-box">নিচের বাটনে ক্লিক করে জেনে নাও তুমি আমার কাছে কেন এত বিশেষ।
+                    </p>
+
+                    <div class="extras-buttons">
+                        <button id="btn-next-reason" class="btn btn-secondary btn-small">পরবর্তী কারণ 🌸</button>
+                        <button id="btn-shower" class="btn btn-accent btn-small">ভালোবাসা ছড়াও 💕</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Ambient Music Controls -->
+    <div id="music-control" class="music-widget hidden">
+        <button id="btn-mute" class="btn-mute-toggle" aria-label="Mute Music">
+            <span class="music-icon wave-1"></span>
+            <span class="music-icon wave-2"></span>
+            <span class="music-icon wave-3"></span>
+            <span class="mute-slash"></span>
+        </button>
+        <span class="music-label">মিষ্টি সুর বাজছে...</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+
+</html>
